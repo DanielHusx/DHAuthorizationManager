@@ -91,7 +91,7 @@ spec.platform     = :ios, "10.0"
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "DHAuthorizationManager", "DHAuthorizationManager/*.{h,m}"
+  spec.source_files  = "DHAuthorizationManager/*.{h,m}"# "DHAuthorizationManager", 
   #spec.exclude_files = "Classes/Exclude"
 
   # spec.public_header_files = "Classes/**/*.h"
