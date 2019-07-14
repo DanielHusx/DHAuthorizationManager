@@ -28,7 +28,7 @@ Pod::Spec.new do |spec|
   "easy to request iOS authorization."
                    DESC
 
-  spec.homepage     = "https://github.com/DanielHusx/DHAuthorization"
+  spec.homepage     = "https://www.github.com/DanielHusx/DHAuthorization"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -80,7 +80,7 @@ spec.platform     = :ios, "10.0"
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  spec.source       = { :git => "https://github.com/DanielHusx/DHAuthorization.git", :tag => "#{spec.version}" }
+  spec.source       = { :git => "https://www.github.com/DanielHusx/DHAuthorization.git", :tag => "#{spec.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
