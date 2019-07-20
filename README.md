@@ -45,13 +45,13 @@ iOS授权集合，可同时请求多授权
 
 
 
-## 安装
+## 安装——暂不可用
 
 ```objective-c
 pod 'DHAuthorizationManager'
 ```
 
-- 最新版本：1.0.0
+- 当前版本：1.0.0
 
 
 
