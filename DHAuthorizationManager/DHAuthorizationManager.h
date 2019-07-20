@@ -12,8 +12,6 @@
  授权Key
  */
 typedef NS_OPTIONS(NSInteger, DHAuthorizationKey) {
-    /// 未知
-    DHAuthorizationKeyUnknown               = 0,
     /// 相机
     DHAuthorizationKeyCamera                = 1 << 0,
     /// 麦克风
@@ -57,14 +55,14 @@ typedef NS_OPTIONS(NSInteger, DHAuthorizationKey) {
 typedef NS_ENUM(NSInteger, DHAuthorizationStatus) {
     /// 暂时未处理
     DHAuthorizationStatusDefault        = 0,
-    /// 未决定
+    /// 未决定，从未请求过授权
     DHAuthorizationStatusNotDetermined  = 1,
     /// 已授权
     DHAuthorizationStatusAuthorized     = 2,
     
     /// 未配置——在info.plist缺少必要键
     DHAuthorizationStatusNotConfigured  = -1,
-    /// 拒绝
+    /// 拒绝，用户拒绝授权
     DHAuthorizationStatusDenied         = -2,
     /// 受限制
     DHAuthorizationStatusRestricted     = -3,
@@ -75,13 +73,13 @@ typedef NS_ENUM(NSInteger, DHAuthorizationStatus) {
 };
 
 NS_ASSUME_NONNULL_BEGIN
-/** 授权结果回调<@(DHAuthorizationKey), 参数> */
+/** 授权结果回调Block<@(DHAuthorizationKey), @(DHAuthorizationStatus)> */
 typedef void (^DHAuthorizationResultBlock)(NSDictionary <NSNumber *, NSNumber *> *result);
-
+/** 授权结果回调代理 */
 @protocol DHAuthorizationManagerDelegate <NSObject>
 /**
  授权结果
- <@(DHAuthorizationKey), 参数>
+ <@(DHAuthorizationKey), @(DHAuthorizationStatus)>
  */
 - (void)authorizationResult:(NSDictionary <NSNumber *, NSNumber *> *)result;
 
@@ -109,6 +107,7 @@ typedef void (^DHAuthorizationResultBlock)(NSDictionary <NSNumber *, NSNumber *>
 - (void)checkAuthorizationForKey:(DHAuthorizationKey)key
                   withParameters:(NSDictionary <NSNumber *, id> *_Nullable)parameters
                       completion:(DHAuthorizationResultBlock)completion;
+
 
 @end
 

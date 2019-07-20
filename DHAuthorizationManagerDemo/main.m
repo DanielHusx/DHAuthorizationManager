@@ -1,8 +1,8 @@
 //
 //  main.m
-//  DHAuthorization
+//  DHAuthorizationManagerDemo
 //
-//  Created by Daniel on 2019/7/14.
+//  Created by Daniel on 2019/7/20.
 //  Copyright © 2019 Daniel. All rights reserved.
 //
 

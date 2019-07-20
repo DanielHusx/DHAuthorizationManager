@@ -7,32 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		65DE96F222DACD5200BDC885 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DE96F122DACD5200BDC885 /* AppDelegate.m */; };
-		65DE96F522DACD5200BDC885 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DE96F422DACD5200BDC885 /* ViewController.m */; };
-		65DE96F822DACD5200BDC885 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65DE96F622DACD5200BDC885 /* Main.storyboard */; };
-		65DE96FA22DACD5400BDC885 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65DE96F922DACD5400BDC885 /* Assets.xcassets */; };
-		65DE96FD22DACD5400BDC885 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65DE96FB22DACD5400BDC885 /* LaunchScreen.storyboard */; };
-		65DE970022DACD5400BDC885 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DE96FF22DACD5400BDC885 /* main.m */; };
-		65DE970B22DACD9B00BDC885 /* DHAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 65DE970922DACD9B00BDC885 /* DHAuthorizationManager.m */; };
+		654D9C3E22E36BC60026ADF2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D9C3D22E36BC60026ADF2 /* AppDelegate.m */; };
+		654D9C4122E36BC60026ADF2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D9C4022E36BC60026ADF2 /* ViewController.m */; };
+		654D9C4422E36BC60026ADF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 654D9C4222E36BC60026ADF2 /* Main.storyboard */; };
+		654D9C4622E36BC70026ADF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 654D9C4522E36BC70026ADF2 /* Assets.xcassets */; };
+		654D9C4922E36BC70026ADF2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 654D9C4722E36BC70026ADF2 /* LaunchScreen.storyboard */; };
+		654D9C4C22E36BC70026ADF2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D9C4B22E36BC70026ADF2 /* main.m */; };
+		654D9C5522E36D1D0026ADF2 /* DHAuthorizationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 654D9C5322E36D1D0026ADF2 /* DHAuthorizationManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		65DE96ED22DACD5200BDC885 /* DHAuthorization.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DHAuthorization.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		65DE96F022DACD5200BDC885 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		65DE96F122DACD5200BDC885 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		65DE96F322DACD5200BDC885 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		65DE96F422DACD5200BDC885 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		65DE96F722DACD5200BDC885 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		65DE96F922DACD5400BDC885 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		65DE96FC22DACD5400BDC885 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		65DE96FE22DACD5400BDC885 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		65DE96FF22DACD5400BDC885 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		65DE970922DACD9B00BDC885 /* DHAuthorizationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHAuthorizationManager.m; sourceTree = "<group>"; };
-		65DE970A22DACD9B00BDC885 /* DHAuthorizationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHAuthorizationManager.h; sourceTree = "<group>"; };
+		654D9C3922E36BC60026ADF2 /* DHAuthorizationManagerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DHAuthorizationManagerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		654D9C3C22E36BC60026ADF2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		654D9C3D22E36BC60026ADF2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		654D9C3F22E36BC60026ADF2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		654D9C4022E36BC60026ADF2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		654D9C4322E36BC60026ADF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		654D9C4522E36BC70026ADF2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		654D9C4822E36BC70026ADF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		654D9C4A22E36BC70026ADF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		654D9C4B22E36BC70026ADF2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		654D9C5322E36D1D0026ADF2 /* DHAuthorizationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DHAuthorizationManager.m; sourceTree = "<group>"; };
+		654D9C5422E36D1D0026ADF2 /* DHAuthorizationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DHAuthorizationManager.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		65DE96EA22DACD5200BDC885 /* Frameworks */ = {
+		654D9C3622E36BC60026ADF2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,44 +42,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		65DE96E422DACD5200BDC885 = {
+		654D9C3022E36BC60026ADF2 = {
 			isa = PBXGroup;
 			children = (
-				65DE96EF22DACD5200BDC885 /* DHAuthorization */,
-				65DE96EE22DACD5200BDC885 /* Products */,
+				654D9C3B22E36BC60026ADF2 /* DHAuthorizationManagerDemo */,
+				654D9C3A22E36BC60026ADF2 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		65DE96EE22DACD5200BDC885 /* Products */ = {
+		654D9C3A22E36BC60026ADF2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				65DE96ED22DACD5200BDC885 /* DHAuthorization.app */,
+				654D9C3922E36BC60026ADF2 /* DHAuthorizationManagerDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		65DE96EF22DACD5200BDC885 /* DHAuthorization */ = {
+		654D9C3B22E36BC60026ADF2 /* DHAuthorizationManagerDemo */ = {
 			isa = PBXGroup;
 			children = (
-				65DE96F022DACD5200BDC885 /* AppDelegate.h */,
-				65DE96F122DACD5200BDC885 /* AppDelegate.m */,
-				65DE96F322DACD5200BDC885 /* ViewController.h */,
-				65DE96F422DACD5200BDC885 /* ViewController.m */,
-				65DE970822DACD9B00BDC885 /* DHAuthorizationManager */,
-				65DE96F622DACD5200BDC885 /* Main.storyboard */,
-				65DE96F922DACD5400BDC885 /* Assets.xcassets */,
-				65DE96FB22DACD5400BDC885 /* LaunchScreen.storyboard */,
-				65DE96FE22DACD5400BDC885 /* Info.plist */,
-				65DE96FF22DACD5400BDC885 /* main.m */,
+				654D9C3C22E36BC60026ADF2 /* AppDelegate.h */,
+				654D9C3D22E36BC60026ADF2 /* AppDelegate.m */,
+				654D9C3F22E36BC60026ADF2 /* ViewController.h */,
+				654D9C4022E36BC60026ADF2 /* ViewController.m */,
+				654D9C5222E36D1D0026ADF2 /* DHAuthorizationManager */,
+				654D9C4222E36BC60026ADF2 /* Main.storyboard */,
+				654D9C4522E36BC70026ADF2 /* Assets.xcassets */,
+				654D9C4722E36BC70026ADF2 /* LaunchScreen.storyboard */,
+				654D9C4A22E36BC70026ADF2 /* Info.plist */,
+				654D9C4B22E36BC70026ADF2 /* main.m */,
 			);
-			path = DHAuthorization;
+			path = DHAuthorizationManagerDemo;
 			sourceTree = "<group>";
 		};
-		65DE970822DACD9B00BDC885 /* DHAuthorizationManager */ = {
+		654D9C5222E36D1D0026ADF2 /* DHAuthorizationManager */ = {
 			isa = PBXGroup;
 			children = (
-				65DE970A22DACD9B00BDC885 /* DHAuthorizationManager.h */,
-				65DE970922DACD9B00BDC885 /* DHAuthorizationManager.m */,
+				654D9C5422E36D1D0026ADF2 /* DHAuthorizationManager.h */,
+				654D9C5322E36D1D0026ADF2 /* DHAuthorizationManager.m */,
 			);
 			path = DHAuthorizationManager;
 			sourceTree = "<group>";
@@ -87,38 +87,38 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		65DE96EC22DACD5200BDC885 /* DHAuthorization */ = {
+		654D9C3822E36BC60026ADF2 /* DHAuthorizationManagerDemo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 65DE970322DACD5400BDC885 /* Build configuration list for PBXNativeTarget "DHAuthorization" */;
+			buildConfigurationList = 654D9C4F22E36BC70026ADF2 /* Build configuration list for PBXNativeTarget "DHAuthorizationManagerDemo" */;
 			buildPhases = (
-				65DE96E922DACD5200BDC885 /* Sources */,
-				65DE96EA22DACD5200BDC885 /* Frameworks */,
-				65DE96EB22DACD5200BDC885 /* Resources */,
+				654D9C3522E36BC60026ADF2 /* Sources */,
+				654D9C3622E36BC60026ADF2 /* Frameworks */,
+				654D9C3722E36BC60026ADF2 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = DHAuthorization;
-			productName = DHAuthorization;
-			productReference = 65DE96ED22DACD5200BDC885 /* DHAuthorization.app */;
+			name = DHAuthorizationManagerDemo;
+			productName = DHAuthorizationManagerDemo;
+			productReference = 654D9C3922E36BC60026ADF2 /* DHAuthorizationManagerDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		65DE96E522DACD5200BDC885 /* Project object */ = {
+		654D9C3122E36BC60026ADF2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = Daniel;
 				TargetAttributes = {
-					65DE96EC22DACD5200BDC885 = {
+					654D9C3822E36BC60026ADF2 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
 				};
 			};
-			buildConfigurationList = 65DE96E822DACD5200BDC885 /* Build configuration list for PBXProject "DHAuthorization" */;
+			buildConfigurationList = 654D9C3422E36BC60026ADF2 /* Build configuration list for PBXProject "DHAuthorizationManagerDemo" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -126,56 +126,56 @@
 				en,
 				Base,
 			);
-			mainGroup = 65DE96E422DACD5200BDC885;
-			productRefGroup = 65DE96EE22DACD5200BDC885 /* Products */;
+			mainGroup = 654D9C3022E36BC60026ADF2;
+			productRefGroup = 654D9C3A22E36BC60026ADF2 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				65DE96EC22DACD5200BDC885 /* DHAuthorization */,
+				654D9C3822E36BC60026ADF2 /* DHAuthorizationManagerDemo */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		65DE96EB22DACD5200BDC885 /* Resources */ = {
+		654D9C3722E36BC60026ADF2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65DE96FD22DACD5400BDC885 /* LaunchScreen.storyboard in Resources */,
-				65DE96FA22DACD5400BDC885 /* Assets.xcassets in Resources */,
-				65DE96F822DACD5200BDC885 /* Main.storyboard in Resources */,
+				654D9C4922E36BC70026ADF2 /* LaunchScreen.storyboard in Resources */,
+				654D9C4622E36BC70026ADF2 /* Assets.xcassets in Resources */,
+				654D9C4422E36BC60026ADF2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		65DE96E922DACD5200BDC885 /* Sources */ = {
+		654D9C3522E36BC60026ADF2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65DE96F522DACD5200BDC885 /* ViewController.m in Sources */,
-				65DE970022DACD5400BDC885 /* main.m in Sources */,
-				65DE96F222DACD5200BDC885 /* AppDelegate.m in Sources */,
-				65DE970B22DACD9B00BDC885 /* DHAuthorizationManager.m in Sources */,
+				654D9C4122E36BC60026ADF2 /* ViewController.m in Sources */,
+				654D9C4C22E36BC70026ADF2 /* main.m in Sources */,
+				654D9C3E22E36BC60026ADF2 /* AppDelegate.m in Sources */,
+				654D9C5522E36D1D0026ADF2 /* DHAuthorizationManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		65DE96F622DACD5200BDC885 /* Main.storyboard */ = {
+		654D9C4222E36BC60026ADF2 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				65DE96F722DACD5200BDC885 /* Base */,
+				654D9C4322E36BC60026ADF2 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		65DE96FB22DACD5400BDC885 /* LaunchScreen.storyboard */ = {
+		654D9C4722E36BC70026ADF2 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				65DE96FC22DACD5400BDC885 /* Base */,
+				654D9C4822E36BC70026ADF2 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -183,7 +183,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		65DE970122DACD5400BDC885 /* Debug */ = {
+		654D9C4D22E36BC70026ADF2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -242,7 +242,7 @@
 			};
 			name = Debug;
 		};
-		65DE970222DACD5400BDC885 /* Release */ = {
+		654D9C4E22E36BC70026ADF2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -295,35 +295,33 @@
 			};
 			name = Release;
 		};
-		65DE970422DACD5400BDC885 /* Debug */ = {
+		654D9C5022E36BC70026ADF2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6838KCPZA2;
-				INFOPLIST_FILE = DHAuthorization/Info.plist;
+				INFOPLIST_FILE = DHAuthorizationManagerDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.daniel.DHAuthorization;
+				PRODUCT_BUNDLE_IDENTIFIER = com.daniel.DHAuthorizationManagerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		65DE970522DACD5400BDC885 /* Release */ = {
+		654D9C5122E36BC70026ADF2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6838KCPZA2;
-				INFOPLIST_FILE = DHAuthorization/Info.plist;
+				INFOPLIST_FILE = DHAuthorizationManagerDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.daniel.DHAuthorization;
+				PRODUCT_BUNDLE_IDENTIFIER = com.daniel.DHAuthorizationManagerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -332,25 +330,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		65DE96E822DACD5200BDC885 /* Build configuration list for PBXProject "DHAuthorization" */ = {
+		654D9C3422E36BC60026ADF2 /* Build configuration list for PBXProject "DHAuthorizationManagerDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				65DE970122DACD5400BDC885 /* Debug */,
-				65DE970222DACD5400BDC885 /* Release */,
+				654D9C4D22E36BC70026ADF2 /* Debug */,
+				654D9C4E22E36BC70026ADF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		65DE970322DACD5400BDC885 /* Build configuration list for PBXNativeTarget "DHAuthorization" */ = {
+		654D9C4F22E36BC70026ADF2 /* Build configuration list for PBXNativeTarget "DHAuthorizationManagerDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				65DE970422DACD5400BDC885 /* Debug */,
-				65DE970522DACD5400BDC885 /* Release */,
+				654D9C5022E36BC70026ADF2 /* Debug */,
+				654D9C5122E36BC70026ADF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 65DE96E522DACD5200BDC885 /* Project object */;
+	rootObject = 654D9C3122E36BC60026ADF2 /* Project object */;
 }

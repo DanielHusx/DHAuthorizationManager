@@ -15,8 +15,8 @@ Pod::Spec.new do |spec|
   #  summary should be tweet-length, and the description more in depth.
   #
 
-  spec.name         = "DHAuthorization"
-  spec.version      = "0.0.4"
+  spec.name         = "DHAuthorizationManager"
+  spec.version      = "1.0.0"
   spec.summary      = "Collection iOS authorization mostly."
 
   # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ Pod::Spec.new do |spec|
   "easy to request iOS authorization."
                    DESC
 
-  spec.homepage     = "https://github.com/DanielHusx/DHAuthorization"
+  spec.homepage     = "https://github.com/DanielHusx/DHAuthorizationManager"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -65,7 +65,7 @@ Pod::Spec.new do |spec|
   #
 
   # spec.platform     = :ios
-spec.platform     = :ios, "10.0"
+spec.platform     = :ios, "9.0"
 
   #  When using multiple platforms
   # spec.ios.deployment_target = "5.0"
@@ -80,7 +80,7 @@ spec.platform     = :ios, "10.0"
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  spec.source       = { :git => "https://github.com/DanielHusx/DHAuthorization.git", :tag => "#{spec.version}" }
+  spec.source       = { :git => "https://github.com/DanielHusx/DHAuthorizationManager.git", :tag => "#{spec.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
