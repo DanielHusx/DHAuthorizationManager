@@ -45,7 +45,7 @@ iOS授权集合，可同时请求多授权
 
 
 
-## 安装——暂不可用
+## 安装
 
 ```objective-c
 pod 'DHAuthorizationManager'
