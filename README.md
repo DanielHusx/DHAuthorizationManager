@@ -33,15 +33,7 @@ iOS授权集合，可同时请求多授权
 - **AppleMusic**: 必须用真机测试，不然方法无响应，可能引起内存泄漏
 - **HealthUpdate/HealthShare**: 必须提供`NSSet<HKOjbectType/HKSampleType*>`*参数
 - **UserNotification**: 必须提供`@(UNAuthorizationOptions)`参数
-- **Siri**: 需要打开`项目->TARGET->Capabilities->Siri`
-
-### 已知Bug——如果你有很好的解决办法，请告知我，谢谢
-
-- [ ] **UserNotification**: 始终反馈已授权，其中的`-requestAccess`也没反应
-
-- [ ] **Cellular**: 一直得不到正确状态
-
-- [ ] **BluetoothPeripheral**: 得不到正确状态
+- **Siri**: 必需打开`项目->TARGET->Capabilities->Siri`，不然点击必崩
 
 
 
@@ -51,46 +43,52 @@ iOS授权集合，可同时请求多授权
 pod 'DHAuthorizationManager'
 ```
 
-- 当前版本：1.0.0
+- 当前版本：1.0.1
 
 
 
 ## 使用方法
 
-### 1. 引用头文件并设置为强引用属性
+> 注意：必须将DHAuthorizationManager设置为强引用成员属性，授权弹框才能正常显示
 
-- 设置为属性，授权弹框才能正常显示
+### 方法一：使用Block
 
 ```objective-c
 #import "DHAuthorizationManager.h"
-
+// 强引用
 @property (nonatomic, strong) DHAuthorizationManager *authorizationManager;
-```
-
-### 2. 初始化
-
-```objective-c
+// 初始化
 self.authorizationManager = [[DHAuthorizationManager alloc] init];
-self.authorizationManager.delegate = self;
-```
-
-### 3. 请求授权
-
-```objective-c
-[self.authorizationManager checkAuthorizationForKey:DHAuthorizationKeyCamera|DHAuthorizationMicrophone withParameters:nil completion:^(NSDictionary <NSNumber *, NSNumber *> *_Nonnull result) {
+// 请求权限校验
+DHAuthorizationKey key = DHAuthorizationKeyCamera|DHAuthorizationKeyMicrophone;
+[self.authorizationManager checkAuthorizationForKey:key withParameters:nil completion:^(NSDictionary <NSNumber *, NSNumber *> *_Nonnull result) {
   // 授权结果result <@(DHAuthorizationKey), @(DHAuthorizationStatus)>
   // do something...
 }];
+```
 
->> or
-[self.authorizationManager checkAuthorizationForKey:DHAuthorizationKeyCamera|DHAuthorizationMicrophone withParameters:nil];
-/** 授权结果result <@(DHAuthorizationKey), @(DHAuthorizationStatus)> */
+### 方法二：使用代理
+
+```objective-c
+#import "DHAuthorizationManager.h"
+// 强引用
+@property (nonatomic, strong) DHAuthorizationManager *authorizationManager;
+// 初始化
+self.authorizationManager = [[DHAuthorizationManager alloc] init];
+self.authorizationManager.delegate = self;
+
+// 请求权限校验
+DHAuthorizationKey key = DHAuthorizationKeyCamera|DHAuthorizationKeyMicrophone;
+[self.authorizationManager checkAuthorizationForKey:key withParameters:nil];
+
+/** 代理反馈授权结果result <@(DHAuthorizationKey), @(DHAuthorizationStatus)> */
 - (void)authorizationResult:(NSDictionary <NSNumber *, NSNumber *> *)result {
   // do something...
 }
+
 ```
 
-
+### 
 
 ## DHAuthorizationStatus说明
 

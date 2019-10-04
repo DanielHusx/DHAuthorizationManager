@@ -797,22 +797,26 @@ static DHPrivacyInfoKey const DHPrivacyInfoKeyMotion               = @"NSMotionU
     
     DHAuthorizationStatus result = DHAuthorizationStatusDefault;
     
-    CMAuthorizationStatus authStatus = [CMMotionActivityManager authorizationStatus];
-    switch (authStatus) {
-        case CMAuthorizationStatusAuthorized:
-            result = DHAuthorizationStatusAuthorized;
-            break;
-        case CMAuthorizationStatusRestricted:
-            result = DHAuthorizationStatusRestricted;
-            break;
-        case CMAuthorizationStatusNotDetermined:
-            result = DHAuthorizationStatusNotDetermined;
-            break;
-        case CMAuthorizationStatusDenied:
-            result = DHAuthorizationStatusDenied;
-            break;
-        default:
-            break;
+    if (@available(iOS 11.0, *)) {
+        CMAuthorizationStatus authStatus = [CMMotionActivityManager authorizationStatus];
+        switch (authStatus) {
+            case CMAuthorizationStatusAuthorized:
+                result = DHAuthorizationStatusAuthorized;
+                break;
+            case CMAuthorizationStatusRestricted:
+                result = DHAuthorizationStatusRestricted;
+                break;
+            case CMAuthorizationStatusNotDetermined:
+                result = DHAuthorizationStatusNotDetermined;
+                break;
+            case CMAuthorizationStatusDenied:
+                result = DHAuthorizationStatusDenied;
+                break;
+            default:
+                break;
+        }
+    } else {
+        result = DHAuthorizationStatusAuthorized;
     }
     
     return result;
@@ -1078,6 +1082,7 @@ static DHPrivacyInfoKey DHPrivacyInfoKeySiri = @"NSSiriUsageDescription";
     DHAuthorizationStatus result = DHAuthorizationStatusDefault;
     
     if (@available(iOS 10.0, *)) {
+        // MARK: 项目中一定要开启Capability的Siri项，不然必崩
         INSiriAuthorizationStatus authStatus = [INPreferences siriAuthorizationStatus];
         switch (authStatus) {
             case INSiriAuthorizationStatusAuthorized:
@@ -1155,7 +1160,6 @@ static DHPrivacyInfoKey DHPrivacyInfoKeySiri = @"NSSiriUsageDescription";
             switch (settings.authorizationStatus) {
                 case UNAuthorizationStatusProvisional:
                 case UNAuthorizationStatusAuthorized:
-                    // FIXME: 一直得到的都是Authorized
                     result = DHAuthorizationStatusAuthorized;
                     break;
                 case UNAuthorizationStatusDenied:
@@ -1190,9 +1194,11 @@ static DHPrivacyInfoKey DHPrivacyInfoKeySiri = @"NSSiriUsageDescription";
         // UNAuthorizationOptionNone请求权限不会弹出弹框，故默认为已授权
         if (![_parameter isEqualToNumber:@(UNAuthorizationOptionNone)]) {
             [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:[((NSNumber *)_parameter) unsignedIntegerValue] completionHandler:^(BOOL granted, NSError * _Nullable error) {
-                if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationKey:requestResult:)])
+                if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationKey:requestResult:)]) {
+                    DHAuthorizationStatus status = granted?DHAuthorizationStatusAuthorized:DHAuthorizationStatusDenied;
                     [self.delegate authorizationKey:[self authorizationKey]
-                                      requestResult:[self authorizationStatus]];
+                                      requestResult:status];
+                }
             }];
         } else {
             if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationKey:requestResult:)])
@@ -1228,7 +1234,10 @@ static DHPrivacyInfoKey DHPrivacyInfoKeySiri = @"NSSiriUsageDescription";
 
 @interface DHAuthorizationCellularHandler ()
 @property (nonatomic, strong) CTCellularData *cellularData;
-
+/// 异步授权状态
+@property (nonatomic, assign) __block DHAuthorizationStatus asyncAuthorizationStatus;
+/// 状态信号量
+@property (nonatomic, strong) dispatch_semaphore_t statusSemaphore;
 @end
 
 @implementation DHAuthorizationCellularHandler
@@ -1244,21 +1253,18 @@ static DHPrivacyInfoKey DHPrivacyInfoKeySiri = @"NSSiriUsageDescription";
 - (DHAuthorizationStatus)authorizationStatus {
     DHAuthorizationStatus result = DHAuthorizationStatusDefault;
     
-    if (@available(iOS 10.0, *)) {
-        CTCellularDataRestrictedState authStatus = [self.cellularData restrictedState];
-        switch (authStatus) {
-            case kCTCellularDataNotRestricted:  // WLAN & Cellular
-                result = DHAuthorizationStatusAuthorized;
-                break;
-            case kCTCellularDataRestricted: // WLAN
-                result = DHAuthorizationStatusDenied;
-                break;
-                // FIXME: 一直得到Unknow，暂时定为系统设置吧
-            case kCTCellularDataRestrictedStateUnknown:
-                result = DHAuthorizationStatusSystemSetting;
-//                result = DHAuthorizationStatusNotDetermined;
-                break;
+    if (@available(iOS 9.0, *)) {
+        if (self.asyncAuthorizationStatus == DHAuthorizationStatusDefault) {
+            if (!_statusSemaphore) {
+                _statusSemaphore = dispatch_semaphore_create(0);
+            }
+            
+            _cellularData = nil;
+            [self cellularData];
+            // 阻塞等待block反馈，务必不要在主线程中这样做
+            dispatch_semaphore_wait(self.statusSemaphore, DISPATCH_TIME_FOREVER);
         }
+        result = self.asyncAuthorizationStatus;
     } else {
         result = DHAuthorizationStatusAuthorized;
     }
@@ -1267,14 +1273,11 @@ static DHPrivacyInfoKey DHPrivacyInfoKeySiri = @"NSSiriUsageDescription";
 }
 
 - (void)requestAccess {
-    if (@available(iOS 10.0, *)) {
-        __weak typeof(self) weakself = self;
-        self.cellularData.cellularDataRestrictionDidUpdateNotifier = ^(CTCellularDataRestrictedState state) {
-            __strong typeof(weakself) strongself = weakself;
-            if (strongself.delegate && [strongself.delegate respondsToSelector:@selector(authorizationKey:requestResult:)])
-                [strongself.delegate authorizationKey:[strongself authorizationKey]
-                                  requestResult:[strongself authorizationStatus]];
-        };
+    if (@available(iOS 9.0, *)) {
+        if (_delegate && [_delegate respondsToSelector:@selector(authorizationKey:requestResult:)])
+            [_delegate authorizationKey:[self authorizationKey]
+                              requestResult:[self authorizationStatus]];
+        
     } else {
         if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationKey:requestResult:)])
             [self.delegate authorizationKey:[self authorizationKey]
@@ -1285,6 +1288,26 @@ static DHPrivacyInfoKey DHPrivacyInfoKeySiri = @"NSSiriUsageDescription";
 - (CTCellularData *)cellularData {
     if (!_cellularData) {
         _cellularData = [[CTCellularData alloc] init];
+        __weak typeof(self) weakself = self;
+        _cellularData.cellularDataRestrictionDidUpdateNotifier = ^(CTCellularDataRestrictedState state) {
+            __strong typeof(weakself) strongself = weakself;
+            DHAuthorizationStatus result = DHAuthorizationStatusDefault;
+            switch (state) {
+                case kCTCellularDataNotRestricted:  // 不受限
+                    result = DHAuthorizationStatusAuthorized;
+                    break;
+                case kCTCellularDataRestricted:     // 受限
+                    result = DHAuthorizationStatusDenied;
+                    break;
+                case kCTCellularDataRestrictedStateUnknown:// 受限状态未知
+                    // 虽然未知，但没有请求权限的方法，就直接反馈去系统设置
+                    result = DHAuthorizationStatusSystemSetting;
+                    break;
+            }
+            strongself.asyncAuthorizationStatus = result;
+            
+            dispatch_semaphore_signal(strongself.statusSemaphore);
+        };
     }
     return _cellularData;
 }
@@ -1294,8 +1317,12 @@ static DHPrivacyInfoKey DHPrivacyInfoKeySiri = @"NSSiriUsageDescription";
 
 
 #pragma mark - BluetoothPeripheral 蓝牙权限
+/// iOS 13后废弃
 static DHPrivacyInfoKey const DHPrivacyInfoKeyBluetoothPeripheral = @"NSBluetoothPeripheralUsageDescription";
+/// iOS 13后生效
+static DHPrivacyInfoKey const DHPrivacyInfoKeyBluetoothAlways = @"NSBluetoothAlwaysUsageDescription";
 @import CoreBluetooth;
+#import <CoreBluetooth/CoreBluetooth.h>
 @interface DHAuthorizationBluetoothPeripheralHandler : NSObject <DHAuthorizationHandler>
 @property (nonatomic, assign) DHAuthorizationKey authorizationKey;
 @property (nonatomic, strong, nullable) DHPrivacyInfoKey privacyInfoKey;
@@ -1304,42 +1331,93 @@ static DHPrivacyInfoKey const DHPrivacyInfoKeyBluetoothPeripheral = @"NSBluetoot
 
 @end
 
-@interface DHAuthorizationBluetoothPeripheralHandler () <CBPeripheralManagerDelegate>
-@property (nonatomic, strong) CBPeripheralManager *peripheralManager;
+@interface DHAuthorizationBluetoothPeripheralHandler () <CBCentralManagerDelegate>
+
+@property (nonatomic, strong) CBCentralManager *centralManager;
+/// 异步保存授权状态
+@property (nonatomic, assign) DHAuthorizationStatus asyncAuthorizationStatus;
+/// 状态信号量
+@property (nonatomic, strong) dispatch_semaphore_t statusSemaphore;
 
 @end
 
 @implementation DHAuthorizationBluetoothPeripheralHandler
+
+- (DHAuthorizationHandlerExternType)externType {
+    return DHAuthorizationHandlerExternTypeHoldOn;
+}
 
 - (DHAuthorizationKey)authorizationKey {
     return DHAuthorizationKeyBluetoothPeripheral;
 }
 
 - (DHPrivacyInfoKey)privacyInfoKey {
+    if (@available(iOS 13.0, *))
+        return DHPrivacyInfoKeyBluetoothAlways;
+    
     return DHPrivacyInfoKeyBluetoothPeripheral;
 }
 
 - (DHAuthorizationStatus)authorizationStatus {
     if (!dh_checkInfoKeyExist([self privacyInfoKey])) return DHAuthorizationStatusNotConfigured;
     
-    return DHAuthorizationStatusSystemSetting;
-    // 调用此方法，异步回调正确状态在-centralManagerDidUpdateState:
-//    DHAuthorizationStatus result = [self convertState:[self.peripheralManager state]];
-// FIXME: 得不到正确值
-//    return result;
-
+    DHAuthorizationStatus result = DHAuthorizationStatusDefault;
+    
+    if (@available(iOS 13.0, *)) {
+        CBManagerAuthorization authStatus = [self.centralManager authorization];
+        switch (authStatus) {
+            case CBManagerAuthorizationDenied:
+                result = DHAuthorizationStatusDenied;
+                break;
+            case CBManagerAuthorizationRestricted:
+                result = DHAuthorizationStatusRestricted;
+                break;
+            case CBManagerAuthorizationAllowedAlways:
+                result = DHAuthorizationStatusAuthorized;
+                break;
+            case CBManagerAuthorizationNotDetermined:
+                result = DHAuthorizationStatusNotDetermined;
+                break;
+            default:
+                break;
+        }
+        NSLog(@"bluetooth authStatus:%zd result:%zd", authStatus, result);
+    } else if (self.asyncAuthorizationStatus != DHAuthorizationStatusDefault) {
+        result = self.asyncAuthorizationStatus;
+    } else {
+        if (!_statusSemaphore) {
+            _statusSemaphore = dispatch_semaphore_create(0);
+        }
+        
+        // iOS 13之前在CBPeripheralManager初始化后
+        // 就触发状态代理方法-peripheralManagerDidUpdateState:
+        _centralManager = nil;
+        [self centralManager];
+        // 务必不要在主线程中这样做
+        dispatch_semaphore_wait(self.statusSemaphore, DISPATCH_TIME_FOREVER);
+        
+        result = self.asyncAuthorizationStatus;
+        
+    }
+    NSLog(@"bluetooth authorizationStatus:%zd", result);
+    return result;
 }
 
 - (void)requestAccess {
+    // 自行从系统开启
     if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationKey:requestResult:)])
-        [self.delegate authorizationKey:[self authorizationKey]
-                          requestResult:DHAuthorizationStatusSystemSetting];
+        [self.delegate authorizationKey:[self authorizationKey] requestResult:DHAuthorizationStatusSystemSetting];
 }
 
-- (DHAuthorizationStatus)convertState:(CBManagerState)state {
+- (void)centralManagerDidUpdateState:(CBCentralManager *)central {
+    if (@available(iOS 13.0, *)) return ;
+    
+    // 此方法在初始化CBPeripheralManager时就会触发
     DHAuthorizationStatus result = DHAuthorizationStatusDefault;
-    switch (state) {
+    switch (central.state) {
         case CBManagerStatePoweredOff:
+            result = DHAuthorizationStatusSystemSetting;
+            break;
         case CBManagerStateUnsupported:
             result = DHAuthorizationStatusNotSupported;
             break;
@@ -1372,22 +1450,17 @@ static DHPrivacyInfoKey const DHPrivacyInfoKeyBluetoothPeripheral = @"NSBluetoot
         default:
             break;
     }
-    return result;
+    
+    self.asyncAuthorizationStatus = result;
+    NSLog(@"centralManagerDidUpdateState state:%zd authStatus:%zd", central.state, result);
+    dispatch_semaphore_signal(_statusSemaphore);
 }
 
-- (void)peripheralManagerDidUpdateState:(CBPeripheralManager *)peripheral {
-    DHAuthorizationStatus status = [self convertState:peripheral.state];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(authorizationKey:requestResult:)])
-        [self.delegate authorizationKey:[self authorizationKey]
-                          requestResult:status];
-}
-
-- (CBPeripheralManager *)peripheralManager {
-    if (!_peripheralManager) {
-        _peripheralManager = [[CBPeripheralManager alloc] initWithDelegate:self queue:nil];
-        //options:@{CBPeripheralManagerOptionShowPowerAlertKey:@NO}];
+- (CBCentralManager *)centralManager {
+    if (!_centralManager) {
+        _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:@{CBPeripheralManagerOptionShowPowerAlertKey:@NO}];
     }
-    return _peripheralManager;
+    return _centralManager;
 }
 
 @end
@@ -1427,19 +1500,19 @@ static DHPrivacyInfoKey const DHPrivacyInfoKeyBluetoothPeripheral = @"NSBluetoot
 /// 单个DHAuthorizationKey与id<DHAuthorizationHandler>类名关联
 @property (nonatomic, strong) NSDictionary <NSNumber *, NSString *> *authorizationClassKeyPath;
 /// 记录最后结果
-@property (nonatomic, strong) NSMutableDictionary <NSNumber *, id> *result;
-/// 特殊handler——比如定位必须是强引用，才不会被ARC提前释放导致弹框一闪而逝
-@property (nonatomic, strong) id<DHAuthorizationHandler> specialHandler;
-
+@property (nonatomic, strong) NSMutableDictionary <NSNumber *, id> *statusResult;
+/// hanlders
+@property (nonatomic, strong) NSMutableSet <id<DHAuthorizationHandler>> *handlers;
 @end
 
 @implementation DHAuthorizationContext
 
 - (void)checkAuthorizationForKey:(DHAuthorizationKey)key
                   withParameters:(NSDictionary<NSNumber *,id> *)parameters {
-    [self.result removeAllObjects];
+    [self.statusResult removeAllObjects];
+    [self.handlers removeAllObjects];
     
-    NSSet *handlers = [self handlersWithKeySet:[self keySetWithKey:key] withParameters:parameters];
+    [self handlersWithKeySet:[self keySetWithKey:key] withParameters:parameters];
     
     if (!_semaphore)
         _semaphore = dispatch_semaphore_create(0);
@@ -1448,34 +1521,28 @@ static DHPrivacyInfoKey const DHPrivacyInfoKeyBluetoothPeripheral = @"NSBluetoot
         _serialQueue = dispatch_queue_create("RequestAuthorizationQueue", DISPATCH_QUEUE_SERIAL);
     
     // 遍历当前授权状态，当NotDetermined时才尝试授权
-    for (id<DHAuthorizationHandler> handler in handlers) {
-        
-        DHAuthorizationStatus status = [handler authorizationStatus];
-        
-        if (status == DHAuthorizationStatusNotDetermined) {
-            // 标记特别的操作
-            if ([handler respondsToSelector:@selector(externType)]) {
-                if ([handler externType] == DHAuthorizationHandlerExternTypeHoldOn)
-                    _specialHandler = handler;
-            }
+    for (id<DHAuthorizationHandler> handler in self.handlers) {
+        dispatch_async(self.serialQueue, ^{
+            DHAuthorizationStatus status = [handler authorizationStatus];
             
-            dispatch_async(self.serialQueue, ^{
-                dh_dispatch_async_on_main_queue(^{
-                    [handler requestAccess];
-                });
-                dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
-            });
-        } else {
-            [self.lock lock];
-            [self.result addEntriesFromDictionary:@{@(handler.authorizationKey):@(handler.authorizationStatus)}];
-            [self.lock unlock];
-        }
-        
+            if (status == DHAuthorizationStatusNotDetermined) {
+                    dh_dispatch_async_on_main_queue(^{
+                        [handler requestAccess];
+                    });
+                    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+                
+            } else {
+                [self.lock lock];
+                [self.statusResult addEntriesFromDictionary:@{@(handler.authorizationKey):@(status)}];
+                [self.lock unlock];
+            }
+        });
     }
     
     dispatch_async(self.serialQueue, ^{
-        self.specialHandler = nil;
-        [self.delegate contextAuthorizedResult:[self.result copy]];
+        // 用完即焚
+        [self.handlers removeAllObjects];
+        [self.delegate contextAuthorizedResult:[self.statusResult copy]];
     });
 }
 
@@ -1485,7 +1552,7 @@ static DHPrivacyInfoKey const DHPrivacyInfoKeyBluetoothPeripheral = @"NSBluetoot
 - (void)authorizationKey:(DHAuthorizationKey)key
            requestResult:(DHAuthorizationStatus)status {
     [self.lock lock];
-    [self.result addEntriesFromDictionary:@{@(key):@(status)}];
+    [self.statusResult addEntriesFromDictionary:@{@(key):@(status)}];
     [self.lock unlock];
     dispatch_semaphore_signal(self.semaphore);
 }
@@ -1493,21 +1560,21 @@ static DHPrivacyInfoKey const DHPrivacyInfoKeyBluetoothPeripheral = @"NSBluetoot
 /**
  根据key得到id<DHAuthorizationHandler>对象初始化列表
  */
-- (NSSet <NSObject *> *)handlersWithKeySet:(NSSet <NSNumber *> *)keySet withParameters:(NSDictionary<NSNumber *,id> *)parameters {
-    NSMutableSet *result = [NSMutableSet set];
+- (void)handlersWithKeySet:(NSSet <NSNumber *> *)keySet withParameters:(NSDictionary<NSNumber *,id> *)parameters {
     
     for (NSNumber *key in keySet) {
         NSString *className = [self.authorizationClassKeyPath objectForKey:key];
         if (!className) continue;
-        
+        // 初始化handler
         id<DHAuthorizationHandler> handler = [[NSClassFromString(className) alloc] init];
+        
         if ([handler respondsToSelector:@selector(setParameter:)])
             handler.parameter = [parameters objectForKey:key];
+        
         handler.delegate = self;
-        [result addObject:handler];
+        
+        [self.handlers addObject:handler];
     }
-    
-    return [result copy];
 }
 
 /**
@@ -1559,11 +1626,11 @@ static DHPrivacyInfoKey const DHPrivacyInfoKeyBluetoothPeripheral = @"NSBluetoot
     return _authorizationClassKeyPath;
 }
 
-- (NSMutableDictionary *)result {
-    if (!_result) {
-        _result = [NSMutableDictionary dictionary];
+- (NSMutableDictionary *)statusResult {
+    if (!_statusResult) {
+        _statusResult = [NSMutableDictionary dictionary];
     }
-    return _result;
+    return _statusResult;
 }
 
 - (NSLock *)lock {
@@ -1571,6 +1638,13 @@ static DHPrivacyInfoKey const DHPrivacyInfoKeyBluetoothPeripheral = @"NSBluetoot
         _lock = [[NSLock alloc] init];
     }
     return _lock;
+}
+
+- (NSMutableSet *)handlers {
+    if (!_handlers) {
+        _handlers = [NSMutableSet set];
+    }
+    return _handlers;
 }
 
 @end

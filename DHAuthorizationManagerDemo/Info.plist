@@ -67,7 +67,7 @@
     <string>App需要您的同意,才能访问提醒事项</string>
     
     <!--DHAuthorizationKeyLocationWhenInUse-->
-    <key>NSLocationAlwaysUsageDescription</key>
+    <key>NSLocationWhenInUseUsageDescription</key>
     <string>App需要您的同意,才能使用期间访问位置</string>
     
     <!--DHAuthorizationKeyLocationAlways 必须同时三个描述-->
@@ -105,5 +105,8 @@
     <!--DHAuthorizationKeyBluetoothPeripheral-->
     <key>NSBluetoothPeripheralUsageDescription</key>
     <string>App需要您的同意,才能访问蓝牙</string>
+    
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>iOS 13：App需要您的同意,才能访问蓝牙</string>
 </dict>
 </plist>

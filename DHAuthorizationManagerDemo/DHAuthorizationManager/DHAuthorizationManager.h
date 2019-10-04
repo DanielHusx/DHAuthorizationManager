@@ -178,6 +178,9 @@ typedef void (^DHAuthorizationResultBlock)(NSDictionary <NSNumber *, NSNumber *>
  <key>NSBluetoothPeripheralUsageDescription</key>
  <string>App需要您的同意,才能访问蓝牙</string>
  
+ <key>NSBluetoothAlwaysUsageDescription</key>
+ <string>iOS 13：App需要您的同意,才能访问蓝牙</string>
+ 
  */
 
 NS_ASSUME_NONNULL_END
